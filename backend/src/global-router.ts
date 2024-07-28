@@ -4,8 +4,6 @@ import userRouter from './user/user-router';
 const globalRouter = Router();
 
 globalRouter.use(userRouter);
-// app.use(authRoutes);
-// app.use( protect, locationRoutes);
-// app.use(protect, userRoutes);
+
 
 export default globalRouter;

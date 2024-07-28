@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 
 export const register = async (req: Request, res: Response): Promise<void> => {
-    const { username, email, password } = req.body;
+    const {  email, password, languages, age, country } = req.body;
 
     try {
         const userExists = await User.findOne({ email });
@@ -18,9 +18,11 @@ export const register = async (req: Request, res: Response): Promise<void> => {
         const hashedPassword = await bcrypt.hash(password, salt);
 
         const user: IUser = new User({
-            username,
             email,
-            password: hashedPassword
+            password: hashedPassword,
+            languages,
+            age,
+            country
         });
 
         await user.save();

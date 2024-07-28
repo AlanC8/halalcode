@@ -9,7 +9,7 @@ import locationRoutes from './location/location-routes';
 import userRoutes from './user/user-router';
 import { errorHandler } from './middlewares/errorHandle';
 import connectDB from './db';
-
+import imamRoutes from './gpt/imam-router';
 dotenv.config();
 
 connectDB();
@@ -30,6 +30,7 @@ app.use(bodyParser.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/locations', locationRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/imam-ai', imamRoutes);
 
 app.use(errorHandler);
 
