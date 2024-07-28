@@ -1,13 +1,17 @@
-import mongoose from 'mongoose';
-
+import mongoose from "mongoose";
+import "dotenv/config";
+const mongoURL = process.env.MONGODB_URL;
+if (!mongoURL) {
+  throw new Error("MongoDB URL Kaida?");
+}
 const connectDB = async () => {
-    try {
-        await mongoose.connect('mongodb+srv://anuza2005:918273645@chatapp.kf0vpvd.mongodb.net/');
-        console.log('MongoDB connected...');
-    } catch (err) {
-        console.error(err);
-        process.exit(1);
-    }
+  try {
+    await mongoose.connect(mongoURL);
+    console.log("MongoDB connected...");
+  } catch (err) {
+    console.error(err);
+    process.exit(1);
+  }
 };
 
 export default connectDB;
