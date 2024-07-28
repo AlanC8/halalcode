@@ -2,7 +2,6 @@ import express, { Application } from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import mongoose from 'mongoose';
 import http from 'http';
 import { Server } from 'socket.io';
 import authRoutes from './auth/auth-router';
@@ -11,10 +10,8 @@ import userRoutes from './user/user-router';
 import { errorHandler } from './middlewares/errorHandle';
 import connectDB from './db';
 
-// Загрузка переменных окружения
 dotenv.config();
 
-// Подключение к базе данных
 connectDB();
 
 const app: Application = express();
@@ -36,16 +33,20 @@ app.use('/api/users', userRoutes);
 
 app.use(errorHandler);
 
+let users = {};
+
 io.on('connection', (socket) => {
     console.log('A user connected');
 
     socket.on('locationUpdate', (locationData) => {
-        // Обработка обновления местоположения
-        io.emit('locationUpdate', locationData);
+        users[socket.id] = locationData;
+        io.emit('usersLocations', users);
     });
 
     socket.on('disconnect', () => {
         console.log('A user disconnected');
+        delete users[socket.id];
+        io.emit('usersLocations', users);
     });
 });
 
