@@ -18,6 +18,20 @@ class OpenAIController {
       res.status(400).json({ error: error.message });
     }
   };
+  getInformation2 = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const data = req.body;
+      const response = await this.openAIService.generateInformation2(
+        data.location,
+        data.fromTime,
+        data.toTime
+      );
+      res.json(response);
+    } catch (error: any) {
+      console.error("Error in /api/information:", error);
+      res.status(400).json({ error: error.message });
+    }
+  };
 }
 
 export default OpenAIController;

@@ -14,7 +14,6 @@ connectDB();
 
 const app: Application = express();
 const server = http.createServer(app);
-
 const io = new Server(server, {
   cors: {
     origin: "*",
@@ -22,7 +21,7 @@ const io = new Server(server, {
   },
 });
 
-app.use(cors());
+app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
 app.use(bodyParser.json());
 
 app.use("/api/", globalRouter);
